@@ -77,6 +77,10 @@ document.querySelectorAll('.swipe').forEach(c=>{{const ok=(!q||c.dataset.n===q.r
 document.getElementById('count').textContent=k+' / {total}';}}filt();
 </script></body></html>'''
 open(OUT,'w',encoding='utf-8').write(page)
+import csv
+with open(os.path.join(REPO,'SwipeLibrary_recap.csv'),'w',newline='',encoding='utf-8') as f:
+    w=csv.writer(f); w.writerow(['swipe','score','tier','family','title','raw_url','source'])
+    for n in sorted(entries): v=entries[n]; w.writerow([n,v['score'],tier_of(n),v['family'],v['title'],RAW%n,v['ref']])
 print(f'SwipeLibrary.html: {len(entries)} entries of {total} declared; families {len(fams)}; missing numbers: {missing or "none"}')
 if missing: sys.exit(1)
 # Install the hook on a fresh clone:  cp tools/pre-commit.hook .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
